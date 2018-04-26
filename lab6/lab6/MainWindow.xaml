@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:lab6"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="416" Width="525">
     <Grid>
-        
+        <Button Content="Вперёд!" HorizontalAlignment="Left" Margin="26,10,0,334" Width="117" Click="Button_Click" Background="#FF86D12D" BorderBrush="#FF2DA68B" Foreground="#FF750CCD" FontSize="20" FontFamily="Segoe Script" FontStyle="Italic" FontWeight="Bold"/>
+        <UniformGrid Name="sp">
+
+
+        </UniformGrid>
     </Grid>
 </Window>
