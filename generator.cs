@@ -148,6 +148,14 @@ namespace lab6
                     }
 
                 }
+
+            //!!!
+            //for (int i = 0; i < field.GetLength(0); i++)
+            //    for (int j = 0; j < field.GetLength(1); j++) ;
+
+
         }
+        
     }
 }
+

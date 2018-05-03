@@ -24,6 +24,8 @@ namespace lab6
         BitmapImage mine = new BitmapImage(new Uri(@"pack://application:,,,/img/bomb.png", UriKind.Absolute));
 
         generator gen = new generator();
+        int open = 0;
+        int mines = 8;
 
         public MainWindow()
         {
@@ -44,28 +46,65 @@ namespace lab6
 
             if (num >= 0)
             {
+                open++;
                 ((Button)sender).Foreground = Brushes.MidnightBlue;
                 ((Button)sender).FontSize = 23;
                 //запись в нажатую кнопку её номера
                 ((Button)sender).Content = num;
+
+                // 
+                //посчитать число закрытых клеток без мин и если оно равно 0, сообщить о победе
+
+                //----------------------------------------------------------
+                if (open == ((5 * 5) - mines))
+                {
+                    MessageBox.Show("Победа!");
+                    sp.IsEnabled = false;
+                }
             }
             if (num == -1)
             {
-                StackPanel minePnl;
-                //создание и инициализация переменной для хранения изображения мины
-                Image img = new Image();
-                //загрузка изображения mine.jpg из папки imgs
-                img.Source = mine;
 
-                //инициализация и установка ориентации, можно вызвать в методе инициализации формы
-                minePnl = new StackPanel();
-                minePnl.Orientation = Orientation.Horizontal;
-                //установка толщины границы объекта
-                minePnl.Margin = new Thickness(1);
-                //добавление в объект изображения
-                minePnl.Children.Add(img);
 
-                ((Button)sender).Content = minePnl;
+               
+               // int num; // входящая позиция от мышки
+
+                //получаем массив кнопок из сетки
+                Button[] buttons = new Button[sp.Children.Count];
+                sp.Children.CopyTo(buttons, 0);
+
+                //перебираем все кнопки
+                for (int i = 0; i < sp.Children.Count; i++)
+                {
+                    //получаем координаты ячейки поля соответствующей кнопке
+                    int x = (int)(buttons[i]).Tag % 5;
+                    int y = (int)(buttons[i]).Tag / 5;
+
+                    //получаем значение из поля
+                    int m = gen.getCell(x, y);
+
+                    //если там мина
+                    if (m == -1)
+                    {
+                        StackPanel minePnl;
+                        //создание и инициализация переменной для хранения изображения мины
+                        Image img = new Image();
+                        //загрузка изображения mine.jpg из папки imgs
+                        img.Source = mine;
+
+                        //инициализация и установка ориентации, можно вызвать в методе инициализации формы
+                        minePnl = new StackPanel();
+                        minePnl.Orientation = Orientation.Horizontal;
+                        //установка толщины границы объекта
+                        minePnl.Margin = new Thickness(1);
+                        //добавление в объект изображения
+                        minePnl.Children.Add(img);
+
+                        buttons[i].Content = minePnl;
+                    }
+                    //bool success = minesCheck();
+                }
+                sp.IsEnabled = false;
             }
 
 
@@ -73,10 +112,12 @@ namespace lab6
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            open = 0;
+            sp.IsEnabled = true;
             sp.Children.Clear();
            //генерация поля
             gen.init(5);
-            gen.plantMines(7, 10);
+            gen.plantMines(mines, mines);
             gen.calculate();
 
             //количество ячеек в сетке
