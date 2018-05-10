@@ -20,6 +20,9 @@ namespace lab6
             return field[i, j];
         }
 
+
+
+
         //проверка что все мины имеют свободную клетку рядом
         bool minesCheck()
         {
@@ -113,6 +116,25 @@ namespace lab6
 
         }
 
+
+        public void opennuli(int i, int j)
+        {
+            if (i>=0 && j >= 0 && i<(field.GetLength(0)) && j<(field.GetLength(1)))
+            if (field[i,j]==0)
+            {
+               field[i,j] = 10;
+               opennuli(i, j-1);
+               opennuli(i-1, j);
+               opennuli(i, j+1);
+               opennuli(i+1, j);
+            }
+
+        }
+
+
+
+
+
         public void calculate()
         {
             //перебираем все клетки
@@ -149,9 +171,7 @@ namespace lab6
 
                 }
 
-            //!!!
-            //for (int i = 0; i < field.GetLength(0); i++)
-            //    for (int j = 0; j < field.GetLength(1); j++) ;
+            
 
 
         }
