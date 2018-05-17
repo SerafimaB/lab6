@@ -25,7 +25,7 @@ namespace lab6
 
         generator gen = new generator();
         int open = 0;
-        int mines = 8;
+        int mines = 3;
 
         public MainWindow()
         {
@@ -44,14 +44,47 @@ namespace lab6
 
             int num = gen.getCell(n % 5, n / 5);
 
-            if (num >= 0)
+
+            if (num > 0)
             {
+                ((Button)sender).Click -= Btn_Click;
+
                 open++;
                 ((Button)sender).Foreground = Brushes.MidnightBlue;
                 ((Button)sender).FontSize = 23;
                 //запись в нажатую кнопку её номера
                 ((Button)sender).Content = num;
 
+                // 
+                //посчитать число закрытых клеток без мин и если оно равно 0, сообщить о победе
+
+                //----------------------------------------------------------
+                if (open == ((5 * 5) - mines))
+                {
+                    MessageBox.Show("Победа!");
+                    sp.IsEnabled = false;
+                }
+            }
+
+            if (num == 0)
+            {
+                
+                gen.opennuli(n % 5, n / 5);
+
+                Button[] buttons = new Button[sp.Children.Count];
+                sp.Children.CopyTo(buttons, 0);
+
+                for (int i = 0; i < buttons.Length; i++)
+                    if (gen.getCell(i % 5, i / 5) == 10)
+                        {
+                            open++;
+
+                            (buttons[i]).Foreground = Brushes.MidnightBlue;
+                            (buttons[i]).FontSize = 23;
+                            //запись в нажатую кнопку её номера
+                            (buttons[i]).Content = 0;
+                        (buttons[i]).Click -= Btn_Click;
+                    }
                 // 
                 //посчитать число закрытых клеток без мин и если оно равно 0, сообщить о победе
 

@@ -24,7 +24,7 @@ namespace lab6
 
 
         //проверка что все мины имеют свободную клетку рядом
-        bool minesCheck()
+        public bool minesCheck()
         {
             //считаем что все имеют
             bool res = true;
@@ -131,6 +131,17 @@ namespace lab6
 
         }
 
+
+        public int ostatok(int a, int b)
+        {
+            if (b <= 0) throw new ArgumentException("Делитель должен быть >= 0");
+            return a % b;
+        }
+
+        public bool chet(int n)
+        {
+            return (n % 2 == 0) ? true : false;
+        }
 
 
 
